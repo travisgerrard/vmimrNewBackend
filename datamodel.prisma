@@ -1,0 +1,97 @@
+enum Permission {
+  ADMIN
+  USER
+  PERMISSIONUPDATE
+}
+
+enum RotationTags {
+  wards
+  nights
+  ccu
+  qi
+  allergy
+  anesthesia
+  cardiology
+  dermatology
+  endocrinology
+  ent
+  gi
+  gim
+  primarycare
+  geriatrics
+  gyn
+  hemeonc
+  infectiousdisease
+  nephro
+  neuro
+  ophtho
+  surgery
+  urology
+  msk
+  palliative
+  path
+  procedures
+  psych
+  pulm
+  rheum
+  scholarly
+  specialreq
+  swing
+  float
+  sbp
+  hyperbarics
+  dotPhrase
+  link
+  mksap
+}
+
+type Presentation {
+  id: ID! @unique
+  presentationType: String! @default(value: "general")
+  presentationDate: String!
+  hpi: String
+  physicalExam: String
+  labsImaging: String
+  summAssessment: String
+  ddx: [String]
+  title: String
+  presentationLearning: String
+  tags: [RotationTags]
+  user: User
+  questions: [Question]
+}
+
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission]
+  presentations: [Presentation]
+  questions: [Question]
+  visible: Boolean! @default(value: "true")
+  institution: String
+}
+
+type Question {
+  id: ID! @unique
+  questionStem: String!
+  questionAnswerText: String
+  answerOptions: [String]
+  answers: [String]
+  User: User!
+  presentation: Presentation!
+}
+
+type Learning {
+  id: ID! @unique
+  tags: [RotationTags]!
+  usersTagged: [User]
+  title: String!
+  whatWasLearned: String!
+  dateWasLearned: String!
+  wasLearnedWith: String!
+  user: [User]
+}
