@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/travis-gerrard-c527f1/VMIMR/dev
-# timestamp: Wed Dec 05 2018 11:53:08 GMT-0800 (Pacific Standard Time)
+# timestamp: Fri Dec 28 2018 15:20:33 GMT-0800 (Pacific Standard Time)
 
 type AggregateLearning {
   count: Int!
@@ -22,13 +22,15 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 type Learning implements Node {
   id: ID!
   tags: [RotationTags!]!
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   createdBy: User!
   taggedUser(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
@@ -46,8 +48,6 @@ type LearningConnection {
 input LearningCreateInput {
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
   tags: LearningCreatetagsInput
   createdBy: UserCreateOneWithoutLearningInput!
   taggedUser: UserCreateManyWithoutTaggedLearningInput
@@ -70,8 +70,6 @@ input LearningCreatetagsInput {
 input LearningCreateWithoutCreatedByInput {
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
   tags: LearningCreatetagsInput
   taggedUser: UserCreateManyWithoutTaggedLearningInput
 }
@@ -79,8 +77,6 @@ input LearningCreateWithoutCreatedByInput {
 input LearningCreateWithoutTaggedUserInput {
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
   tags: LearningCreatetagsInput
   createdBy: UserCreateOneWithoutLearningInput!
 }
@@ -101,14 +97,10 @@ enum LearningOrderByInput {
   title_DESC
   whatWasLearned_ASC
   whatWasLearned_DESC
-  dateWasLearned_ASC
-  dateWasLearned_DESC
-  wasLearnedWith_ASC
-  wasLearnedWith_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type LearningPreviousValues {
@@ -116,8 +108,8 @@ type LearningPreviousValues {
   tags: [RotationTags!]!
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input LearningScalarWhereInput {
@@ -249,86 +241,50 @@ input LearningScalarWhereInput {
 
   """All values not ending with the given string."""
   whatWasLearned_not_ends_with: String
-  dateWasLearned: String
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  dateWasLearned_not: String
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  dateWasLearned_in: [String!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  dateWasLearned_not_in: [String!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  dateWasLearned_lt: String
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  dateWasLearned_lte: String
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  dateWasLearned_gt: String
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  dateWasLearned_gte: String
-
-  """All values containing the given string."""
-  dateWasLearned_contains: String
-
-  """All values not containing the given string."""
-  dateWasLearned_not_contains: String
-
-  """All values starting with the given string."""
-  dateWasLearned_starts_with: String
-
-  """All values not starting with the given string."""
-  dateWasLearned_not_starts_with: String
-
-  """All values ending with the given string."""
-  dateWasLearned_ends_with: String
-
-  """All values not ending with the given string."""
-  dateWasLearned_not_ends_with: String
-  wasLearnedWith: String
+  createdAt_gte: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  wasLearnedWith_not: String
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  wasLearnedWith_in: [String!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  wasLearnedWith_not_in: [String!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  wasLearnedWith_lt: String
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  wasLearnedWith_lte: String
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  wasLearnedWith_gt: String
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  wasLearnedWith_gte: String
-
-  """All values containing the given string."""
-  wasLearnedWith_contains: String
-
-  """All values not containing the given string."""
-  wasLearnedWith_not_contains: String
-
-  """All values starting with the given string."""
-  wasLearnedWith_starts_with: String
-
-  """All values not starting with the given string."""
-  wasLearnedWith_not_starts_with: String
-
-  """All values ending with the given string."""
-  wasLearnedWith_ends_with: String
-
-  """All values not ending with the given string."""
-  wasLearnedWith_not_ends_with: String
+  updatedAt_gte: DateTime
 }
 
 type LearningSubscriptionPayload {
@@ -373,8 +329,6 @@ input LearningSubscriptionWhereInput {
 input LearningUpdateInput {
   title: String
   whatWasLearned: String
-  dateWasLearned: String
-  wasLearnedWith: String
   tags: LearningUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutLearningInput
   taggedUser: UserUpdateManyWithoutTaggedLearningInput
@@ -383,16 +337,12 @@ input LearningUpdateInput {
 input LearningUpdateManyDataInput {
   title: String
   whatWasLearned: String
-  dateWasLearned: String
-  wasLearnedWith: String
   tags: LearningUpdatetagsInput
 }
 
 input LearningUpdateManyMutationInput {
   title: String
   whatWasLearned: String
-  dateWasLearned: String
-  wasLearnedWith: String
   tags: LearningUpdatetagsInput
 }
 
@@ -430,8 +380,6 @@ input LearningUpdatetagsInput {
 input LearningUpdateWithoutCreatedByDataInput {
   title: String
   whatWasLearned: String
-  dateWasLearned: String
-  wasLearnedWith: String
   tags: LearningUpdatetagsInput
   taggedUser: UserUpdateManyWithoutTaggedLearningInput
 }
@@ -439,8 +387,6 @@ input LearningUpdateWithoutCreatedByDataInput {
 input LearningUpdateWithoutTaggedUserDataInput {
   title: String
   whatWasLearned: String
-  dateWasLearned: String
-  wasLearnedWith: String
   tags: LearningUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutLearningInput
 }
@@ -596,86 +542,50 @@ input LearningWhereInput {
 
   """All values not ending with the given string."""
   whatWasLearned_not_ends_with: String
-  dateWasLearned: String
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  dateWasLearned_not: String
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  dateWasLearned_in: [String!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  dateWasLearned_not_in: [String!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  dateWasLearned_lt: String
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  dateWasLearned_lte: String
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  dateWasLearned_gt: String
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  dateWasLearned_gte: String
-
-  """All values containing the given string."""
-  dateWasLearned_contains: String
-
-  """All values not containing the given string."""
-  dateWasLearned_not_contains: String
-
-  """All values starting with the given string."""
-  dateWasLearned_starts_with: String
-
-  """All values not starting with the given string."""
-  dateWasLearned_not_starts_with: String
-
-  """All values ending with the given string."""
-  dateWasLearned_ends_with: String
-
-  """All values not ending with the given string."""
-  dateWasLearned_not_ends_with: String
-  wasLearnedWith: String
+  createdAt_gte: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  wasLearnedWith_not: String
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  wasLearnedWith_in: [String!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  wasLearnedWith_not_in: [String!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  wasLearnedWith_lt: String
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  wasLearnedWith_lte: String
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  wasLearnedWith_gt: String
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  wasLearnedWith_gte: String
-
-  """All values containing the given string."""
-  wasLearnedWith_contains: String
-
-  """All values not containing the given string."""
-  wasLearnedWith_not_contains: String
-
-  """All values starting with the given string."""
-  wasLearnedWith_starts_with: String
-
-  """All values not starting with the given string."""
-  wasLearnedWith_not_starts_with: String
-
-  """All values ending with the given string."""
-  wasLearnedWith_ends_with: String
-
-  """All values not ending with the given string."""
-  wasLearnedWith_not_ends_with: String
+  updatedAt_gte: DateTime
   createdBy: UserWhereInput
   taggedUser_every: UserWhereInput
   taggedUser_some: UserWhereInput

@@ -93,8 +93,8 @@ type Learning {
   tags: [RotationTags]!
   title: String!
   whatWasLearned: String!
-  dateWasLearned: String!
-  wasLearnedWith: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   createdBy: User! @relation(name: "LearningCreator")
-  taggedUser: [User] @relation(name: "TaggedLearning")
+  taggedUser: [User]! @relation(name: "TaggedLearning")
 }
