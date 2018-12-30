@@ -25,4 +25,5 @@ type Mutation {
 type Query {
   me: User
   users: [User]!
+  learnings(orderBy: LearningOrderByInput): [Learning]!
 }
