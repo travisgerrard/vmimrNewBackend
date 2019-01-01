@@ -4,6 +4,15 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+enum PresentationTypes {
+  General
+  Morning
+  Case
+  Specialist
+  PrimaryCare
+  InternSurvival
+}
+
 enum RotationTags {
   Wards
   Nights
@@ -47,18 +56,16 @@ enum RotationTags {
 
 type Presentation {
   id: ID! @unique
-  presentationType: String! @default(value: "general")
-  presentationDate: String!
+  presentationType: PresentationTypes! @default(value: "General")
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
   ddx: [String]
-  title: String
-  presentationLearning: String
   tags: [RotationTags]
-  createdBy: User
+  createdBy: User! @relation(name: "PresentationCreator")
+  whatWasLearned: String!
   questions: [Question]
+  taggedUser: [User]! @relation(name: "TaggedPresentation")
 }
 
 type User {
@@ -70,10 +77,13 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission]
   presentations: [Presentation]
+    @relation(name: "PresentationCreator", onDelete: CASCADE)
   questions: [Question]
   learning: [Learning] @relation(name: "LearningCreator", onDelete: CASCADE)
   taggedLearning: [Learning]
     @relation(name: "TaggedLearning", onDelete: CASCADE)
+  taggedPresentation: [Presentation]
+    @relation(name: "TaggedPresentation", onDelete: CASCADE)
   visible: Boolean! @default(value: "true")
   institution: String
 }
@@ -91,7 +101,6 @@ type Question {
 type Learning {
   id: ID! @unique
   tags: [RotationTags]!
-  title: String!
   whatWasLearned: String!
   createdAt: DateTime!
   updatedAt: DateTime!

@@ -137,10 +137,6 @@ const mutations = {
       return { id: user };
     });
 
-    console.log(args.tags);
-
-    console.log(usersThatAreTagged);
-
     const card = await ctx.db.mutation.createLearning(
       {
         data: {
@@ -163,16 +159,39 @@ const mutations = {
 
     console.log(card);
     return card;
-  }
+  },
 
-  // id: ID! @unique
-  // tags: [RotationTags]!
-  // title: String!
-  // whatWasLearned: String!
-  // createdAt: DateTime!
-  // updatedAt: DateTime!
-  // createdBy: User! @relation(name: "LearningCreator")
-  // taggedUser
+  async createPresentation(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that');
+    }
+
+    const usersThatAreTagged = args.taggedUser.map(user => {
+      return { id: user };
+    });
+
+    const presentation = await ctx.db.mutation.createPresentation(
+      {
+        data: {
+          ...args,
+          createdBy: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
+          taggedUser: {
+            connect: usersThatAreTagged
+          },
+          tags: {
+            set: args.tags
+          }
+        }
+      },
+      info
+    );
+
+    return presentation;
+  }
 };
 
 module.exports = mutations;

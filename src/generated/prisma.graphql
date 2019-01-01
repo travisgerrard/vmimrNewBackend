@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/travis-gerrard-c527f1/VMIMR/dev
-# timestamp: Fri Dec 28 2018 15:20:33 GMT-0800 (Pacific Standard Time)
+# timestamp: Mon Dec 31 2018 15:48:16 GMT-0800 (Pacific Standard Time)
 
 type AggregateLearning {
   count: Int!
@@ -27,7 +27,6 @@ scalar DateTime
 type Learning implements Node {
   id: ID!
   tags: [RotationTags!]!
-  title: String!
   whatWasLearned: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -46,7 +45,6 @@ type LearningConnection {
 }
 
 input LearningCreateInput {
-  title: String!
   whatWasLearned: String!
   tags: LearningCreatetagsInput
   createdBy: UserCreateOneWithoutLearningInput!
@@ -68,14 +66,12 @@ input LearningCreatetagsInput {
 }
 
 input LearningCreateWithoutCreatedByInput {
-  title: String!
   whatWasLearned: String!
   tags: LearningCreatetagsInput
   taggedUser: UserCreateManyWithoutTaggedLearningInput
 }
 
 input LearningCreateWithoutTaggedUserInput {
-  title: String!
   whatWasLearned: String!
   tags: LearningCreatetagsInput
   createdBy: UserCreateOneWithoutLearningInput!
@@ -93,8 +89,6 @@ type LearningEdge {
 enum LearningOrderByInput {
   id_ASC
   id_DESC
-  title_ASC
-  title_DESC
   whatWasLearned_ASC
   whatWasLearned_DESC
   createdAt_ASC
@@ -106,7 +100,6 @@ enum LearningOrderByInput {
 type LearningPreviousValues {
   id: ID!
   tags: [RotationTags!]!
-  title: String!
   whatWasLearned: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -161,46 +154,6 @@ input LearningScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  title: String
-
-  """All values that are not equal to given value."""
-  title_not: String
-
-  """All values that are contained in given list."""
-  title_in: [String!]
-
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
-
-  """All values less than the given value."""
-  title_lt: String
-
-  """All values less than or equal the given value."""
-  title_lte: String
-
-  """All values greater than the given value."""
-  title_gt: String
-
-  """All values greater than or equal the given value."""
-  title_gte: String
-
-  """All values containing the given string."""
-  title_contains: String
-
-  """All values not containing the given string."""
-  title_not_contains: String
-
-  """All values starting with the given string."""
-  title_starts_with: String
-
-  """All values not starting with the given string."""
-  title_not_starts_with: String
-
-  """All values ending with the given string."""
-  title_ends_with: String
-
-  """All values not ending with the given string."""
-  title_not_ends_with: String
   whatWasLearned: String
 
   """All values that are not equal to given value."""
@@ -327,7 +280,6 @@ input LearningSubscriptionWhereInput {
 }
 
 input LearningUpdateInput {
-  title: String
   whatWasLearned: String
   tags: LearningUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutLearningInput
@@ -335,13 +287,11 @@ input LearningUpdateInput {
 }
 
 input LearningUpdateManyDataInput {
-  title: String
   whatWasLearned: String
   tags: LearningUpdatetagsInput
 }
 
 input LearningUpdateManyMutationInput {
-  title: String
   whatWasLearned: String
   tags: LearningUpdatetagsInput
 }
@@ -378,14 +328,12 @@ input LearningUpdatetagsInput {
 }
 
 input LearningUpdateWithoutCreatedByDataInput {
-  title: String
   whatWasLearned: String
   tags: LearningUpdatetagsInput
   taggedUser: UserUpdateManyWithoutTaggedLearningInput
 }
 
 input LearningUpdateWithoutTaggedUserDataInput {
-  title: String
   whatWasLearned: String
   tags: LearningUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutLearningInput
@@ -462,46 +410,6 @@ input LearningWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  title: String
-
-  """All values that are not equal to given value."""
-  title_not: String
-
-  """All values that are contained in given list."""
-  title_in: [String!]
-
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
-
-  """All values less than the given value."""
-  title_lt: String
-
-  """All values less than or equal the given value."""
-  title_lte: String
-
-  """All values greater than the given value."""
-  title_gt: String
-
-  """All values greater than or equal the given value."""
-  title_gte: String
-
-  """All values containing the given string."""
-  title_contains: String
-
-  """All values not containing the given string."""
-  title_not_contains: String
-
-  """All values starting with the given string."""
-  title_starts_with: String
-
-  """All values not starting with the given string."""
-  title_not_starts_with: String
-
-  """All values ending with the given string."""
-  title_ends_with: String
-
-  """All values not ending with the given string."""
-  title_not_ends_with: String
   whatWasLearned: String
 
   """All values that are not equal to given value."""
@@ -664,18 +572,16 @@ enum Permission {
 
 type Presentation implements Node {
   id: ID!
-  presentationType: String!
-  presentationDate: String!
+  presentationType: PresentationTypes!
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
   ddx: [String!]!
-  title: String
-  presentationLearning: String
   tags: [RotationTags!]!
-  createdBy: User
+  createdBy: User!
+  whatWasLearned: String!
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
+  taggedUser(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 """A connection to a list of items."""
@@ -693,22 +599,25 @@ input PresentationCreateddxInput {
 }
 
 input PresentationCreateInput {
-  presentationType: String
-  presentationDate: String!
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
-  createdBy: UserCreateOneWithoutPresentationsInput
+  createdBy: UserCreateOneWithoutPresentationsInput!
   questions: QuestionCreateManyWithoutPresentationInput
+  taggedUser: UserCreateManyWithoutTaggedPresentationInput
 }
 
 input PresentationCreateManyWithoutCreatedByInput {
   create: [PresentationCreateWithoutCreatedByInput!]
+  connect: [PresentationWhereUniqueInput!]
+}
+
+input PresentationCreateManyWithoutTaggedUserInput {
+  create: [PresentationCreateWithoutTaggedUserInput!]
   connect: [PresentationWhereUniqueInput!]
 }
 
@@ -722,31 +631,39 @@ input PresentationCreatetagsInput {
 }
 
 input PresentationCreateWithoutCreatedByInput {
-  presentationType: String
-  presentationDate: String!
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   questions: QuestionCreateManyWithoutPresentationInput
+  taggedUser: UserCreateManyWithoutTaggedPresentationInput
 }
 
 input PresentationCreateWithoutQuestionsInput {
-  presentationType: String
-  presentationDate: String!
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
-  createdBy: UserCreateOneWithoutPresentationsInput
+  createdBy: UserCreateOneWithoutPresentationsInput!
+  taggedUser: UserCreateManyWithoutTaggedPresentationInput
+}
+
+input PresentationCreateWithoutTaggedUserInput {
+  presentationType: PresentationTypes
+  hpi: String
+  physicalExam: String
+  summAssessment: String
+  whatWasLearned: String!
+  ddx: PresentationCreateddxInput
+  tags: PresentationCreatetagsInput
+  createdBy: UserCreateOneWithoutPresentationsInput!
+  questions: QuestionCreateManyWithoutPresentationInput
 }
 
 """An edge in a connection."""
@@ -763,20 +680,14 @@ enum PresentationOrderByInput {
   id_DESC
   presentationType_ASC
   presentationType_DESC
-  presentationDate_ASC
-  presentationDate_DESC
   hpi_ASC
   hpi_DESC
   physicalExam_ASC
   physicalExam_DESC
-  labsImaging_ASC
-  labsImaging_DESC
   summAssessment_ASC
   summAssessment_DESC
-  title_ASC
-  title_DESC
-  presentationLearning_ASC
-  presentationLearning_DESC
+  whatWasLearned_ASC
+  whatWasLearned_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -785,16 +696,13 @@ enum PresentationOrderByInput {
 
 type PresentationPreviousValues {
   id: ID!
-  presentationType: String!
-  presentationDate: String!
+  presentationType: PresentationTypes!
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
   ddx: [String!]!
-  title: String
-  presentationLearning: String
   tags: [RotationTags!]!
+  whatWasLearned: String!
 }
 
 input PresentationScalarWhereInput {
@@ -846,86 +754,16 @@ input PresentationScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  presentationType: String
+  presentationType: PresentationTypes
 
   """All values that are not equal to given value."""
-  presentationType_not: String
+  presentationType_not: PresentationTypes
 
   """All values that are contained in given list."""
-  presentationType_in: [String!]
+  presentationType_in: [PresentationTypes!]
 
   """All values that are not contained in given list."""
-  presentationType_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationType_lt: String
-
-  """All values less than or equal the given value."""
-  presentationType_lte: String
-
-  """All values greater than the given value."""
-  presentationType_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationType_gte: String
-
-  """All values containing the given string."""
-  presentationType_contains: String
-
-  """All values not containing the given string."""
-  presentationType_not_contains: String
-
-  """All values starting with the given string."""
-  presentationType_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationType_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationType_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationType_not_ends_with: String
-  presentationDate: String
-
-  """All values that are not equal to given value."""
-  presentationDate_not: String
-
-  """All values that are contained in given list."""
-  presentationDate_in: [String!]
-
-  """All values that are not contained in given list."""
-  presentationDate_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationDate_lt: String
-
-  """All values less than or equal the given value."""
-  presentationDate_lte: String
-
-  """All values greater than the given value."""
-  presentationDate_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationDate_gte: String
-
-  """All values containing the given string."""
-  presentationDate_contains: String
-
-  """All values not containing the given string."""
-  presentationDate_not_contains: String
-
-  """All values starting with the given string."""
-  presentationDate_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationDate_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationDate_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationDate_not_ends_with: String
+  presentationType_not_in: [PresentationTypes!]
   hpi: String
 
   """All values that are not equal to given value."""
@@ -1006,46 +844,6 @@ input PresentationScalarWhereInput {
 
   """All values not ending with the given string."""
   physicalExam_not_ends_with: String
-  labsImaging: String
-
-  """All values that are not equal to given value."""
-  labsImaging_not: String
-
-  """All values that are contained in given list."""
-  labsImaging_in: [String!]
-
-  """All values that are not contained in given list."""
-  labsImaging_not_in: [String!]
-
-  """All values less than the given value."""
-  labsImaging_lt: String
-
-  """All values less than or equal the given value."""
-  labsImaging_lte: String
-
-  """All values greater than the given value."""
-  labsImaging_gt: String
-
-  """All values greater than or equal the given value."""
-  labsImaging_gte: String
-
-  """All values containing the given string."""
-  labsImaging_contains: String
-
-  """All values not containing the given string."""
-  labsImaging_not_contains: String
-
-  """All values starting with the given string."""
-  labsImaging_starts_with: String
-
-  """All values not starting with the given string."""
-  labsImaging_not_starts_with: String
-
-  """All values ending with the given string."""
-  labsImaging_ends_with: String
-
-  """All values not ending with the given string."""
-  labsImaging_not_ends_with: String
   summAssessment: String
 
   """All values that are not equal to given value."""
@@ -1086,86 +884,46 @@ input PresentationScalarWhereInput {
 
   """All values not ending with the given string."""
   summAssessment_not_ends_with: String
-  title: String
+  whatWasLearned: String
 
   """All values that are not equal to given value."""
-  title_not: String
+  whatWasLearned_not: String
 
   """All values that are contained in given list."""
-  title_in: [String!]
+  whatWasLearned_in: [String!]
 
   """All values that are not contained in given list."""
-  title_not_in: [String!]
+  whatWasLearned_not_in: [String!]
 
   """All values less than the given value."""
-  title_lt: String
+  whatWasLearned_lt: String
 
   """All values less than or equal the given value."""
-  title_lte: String
+  whatWasLearned_lte: String
 
   """All values greater than the given value."""
-  title_gt: String
+  whatWasLearned_gt: String
 
   """All values greater than or equal the given value."""
-  title_gte: String
+  whatWasLearned_gte: String
 
   """All values containing the given string."""
-  title_contains: String
+  whatWasLearned_contains: String
 
   """All values not containing the given string."""
-  title_not_contains: String
+  whatWasLearned_not_contains: String
 
   """All values starting with the given string."""
-  title_starts_with: String
+  whatWasLearned_starts_with: String
 
   """All values not starting with the given string."""
-  title_not_starts_with: String
+  whatWasLearned_not_starts_with: String
 
   """All values ending with the given string."""
-  title_ends_with: String
+  whatWasLearned_ends_with: String
 
   """All values not ending with the given string."""
-  title_not_ends_with: String
-  presentationLearning: String
-
-  """All values that are not equal to given value."""
-  presentationLearning_not: String
-
-  """All values that are contained in given list."""
-  presentationLearning_in: [String!]
-
-  """All values that are not contained in given list."""
-  presentationLearning_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationLearning_lt: String
-
-  """All values less than or equal the given value."""
-  presentationLearning_lte: String
-
-  """All values greater than the given value."""
-  presentationLearning_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationLearning_gte: String
-
-  """All values containing the given string."""
-  presentationLearning_contains: String
-
-  """All values not containing the given string."""
-  presentationLearning_not_contains: String
-
-  """All values starting with the given string."""
-  presentationLearning_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationLearning_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationLearning_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationLearning_not_ends_with: String
+  whatWasLearned_not_ends_with: String
 }
 
 type PresentationSubscriptionPayload {
@@ -1207,47 +965,48 @@ input PresentationSubscriptionWhereInput {
   node: PresentationWhereInput
 }
 
+enum PresentationTypes {
+  General
+  Morning
+  Case
+  Specialist
+  PrimaryCare
+  InternSurvival
+}
+
 input PresentationUpdateddxInput {
   set: [String!]
 }
 
 input PresentationUpdateInput {
-  presentationType: String
-  presentationDate: String
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
-  createdBy: UserUpdateOneWithoutPresentationsInput
+  createdBy: UserUpdateOneRequiredWithoutPresentationsInput
   questions: QuestionUpdateManyWithoutPresentationInput
+  taggedUser: UserUpdateManyWithoutTaggedPresentationInput
 }
 
 input PresentationUpdateManyDataInput {
-  presentationType: String
-  presentationDate: String
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
 }
 
 input PresentationUpdateManyMutationInput {
-  presentationType: String
-  presentationDate: String
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
 }
@@ -1261,6 +1020,17 @@ input PresentationUpdateManyWithoutCreatedByInput {
   updateMany: [PresentationUpdateManyWithWhereNestedInput!]
   deleteMany: [PresentationScalarWhereInput!]
   upsert: [PresentationUpsertWithWhereUniqueWithoutCreatedByInput!]
+}
+
+input PresentationUpdateManyWithoutTaggedUserInput {
+  create: [PresentationCreateWithoutTaggedUserInput!]
+  connect: [PresentationWhereUniqueInput!]
+  disconnect: [PresentationWhereUniqueInput!]
+  delete: [PresentationWhereUniqueInput!]
+  update: [PresentationUpdateWithWhereUniqueWithoutTaggedUserInput!]
+  updateMany: [PresentationUpdateManyWithWhereNestedInput!]
+  deleteMany: [PresentationScalarWhereInput!]
+  upsert: [PresentationUpsertWithWhereUniqueWithoutTaggedUserInput!]
 }
 
 input PresentationUpdateManyWithWhereNestedInput {
@@ -1280,36 +1050,49 @@ input PresentationUpdatetagsInput {
 }
 
 input PresentationUpdateWithoutCreatedByDataInput {
-  presentationType: String
-  presentationDate: String
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
   questions: QuestionUpdateManyWithoutPresentationInput
+  taggedUser: UserUpdateManyWithoutTaggedPresentationInput
 }
 
 input PresentationUpdateWithoutQuestionsDataInput {
-  presentationType: String
-  presentationDate: String
+  presentationType: PresentationTypes
   hpi: String
   physicalExam: String
-  labsImaging: String
   summAssessment: String
-  title: String
-  presentationLearning: String
+  whatWasLearned: String
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
-  createdBy: UserUpdateOneWithoutPresentationsInput
+  createdBy: UserUpdateOneRequiredWithoutPresentationsInput
+  taggedUser: UserUpdateManyWithoutTaggedPresentationInput
+}
+
+input PresentationUpdateWithoutTaggedUserDataInput {
+  presentationType: PresentationTypes
+  hpi: String
+  physicalExam: String
+  summAssessment: String
+  whatWasLearned: String
+  ddx: PresentationUpdateddxInput
+  tags: PresentationUpdatetagsInput
+  createdBy: UserUpdateOneRequiredWithoutPresentationsInput
+  questions: QuestionUpdateManyWithoutPresentationInput
 }
 
 input PresentationUpdateWithWhereUniqueWithoutCreatedByInput {
   where: PresentationWhereUniqueInput!
   data: PresentationUpdateWithoutCreatedByDataInput!
+}
+
+input PresentationUpdateWithWhereUniqueWithoutTaggedUserInput {
+  where: PresentationWhereUniqueInput!
+  data: PresentationUpdateWithoutTaggedUserDataInput!
 }
 
 input PresentationUpsertWithoutQuestionsInput {
@@ -1321,6 +1104,12 @@ input PresentationUpsertWithWhereUniqueWithoutCreatedByInput {
   where: PresentationWhereUniqueInput!
   update: PresentationUpdateWithoutCreatedByDataInput!
   create: PresentationCreateWithoutCreatedByInput!
+}
+
+input PresentationUpsertWithWhereUniqueWithoutTaggedUserInput {
+  where: PresentationWhereUniqueInput!
+  update: PresentationUpdateWithoutTaggedUserDataInput!
+  create: PresentationCreateWithoutTaggedUserInput!
 }
 
 input PresentationWhereInput {
@@ -1372,86 +1161,16 @@ input PresentationWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  presentationType: String
+  presentationType: PresentationTypes
 
   """All values that are not equal to given value."""
-  presentationType_not: String
+  presentationType_not: PresentationTypes
 
   """All values that are contained in given list."""
-  presentationType_in: [String!]
+  presentationType_in: [PresentationTypes!]
 
   """All values that are not contained in given list."""
-  presentationType_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationType_lt: String
-
-  """All values less than or equal the given value."""
-  presentationType_lte: String
-
-  """All values greater than the given value."""
-  presentationType_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationType_gte: String
-
-  """All values containing the given string."""
-  presentationType_contains: String
-
-  """All values not containing the given string."""
-  presentationType_not_contains: String
-
-  """All values starting with the given string."""
-  presentationType_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationType_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationType_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationType_not_ends_with: String
-  presentationDate: String
-
-  """All values that are not equal to given value."""
-  presentationDate_not: String
-
-  """All values that are contained in given list."""
-  presentationDate_in: [String!]
-
-  """All values that are not contained in given list."""
-  presentationDate_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationDate_lt: String
-
-  """All values less than or equal the given value."""
-  presentationDate_lte: String
-
-  """All values greater than the given value."""
-  presentationDate_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationDate_gte: String
-
-  """All values containing the given string."""
-  presentationDate_contains: String
-
-  """All values not containing the given string."""
-  presentationDate_not_contains: String
-
-  """All values starting with the given string."""
-  presentationDate_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationDate_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationDate_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationDate_not_ends_with: String
+  presentationType_not_in: [PresentationTypes!]
   hpi: String
 
   """All values that are not equal to given value."""
@@ -1532,46 +1251,6 @@ input PresentationWhereInput {
 
   """All values not ending with the given string."""
   physicalExam_not_ends_with: String
-  labsImaging: String
-
-  """All values that are not equal to given value."""
-  labsImaging_not: String
-
-  """All values that are contained in given list."""
-  labsImaging_in: [String!]
-
-  """All values that are not contained in given list."""
-  labsImaging_not_in: [String!]
-
-  """All values less than the given value."""
-  labsImaging_lt: String
-
-  """All values less than or equal the given value."""
-  labsImaging_lte: String
-
-  """All values greater than the given value."""
-  labsImaging_gt: String
-
-  """All values greater than or equal the given value."""
-  labsImaging_gte: String
-
-  """All values containing the given string."""
-  labsImaging_contains: String
-
-  """All values not containing the given string."""
-  labsImaging_not_contains: String
-
-  """All values starting with the given string."""
-  labsImaging_starts_with: String
-
-  """All values not starting with the given string."""
-  labsImaging_not_starts_with: String
-
-  """All values ending with the given string."""
-  labsImaging_ends_with: String
-
-  """All values not ending with the given string."""
-  labsImaging_not_ends_with: String
   summAssessment: String
 
   """All values that are not equal to given value."""
@@ -1612,90 +1291,53 @@ input PresentationWhereInput {
 
   """All values not ending with the given string."""
   summAssessment_not_ends_with: String
-  title: String
+  whatWasLearned: String
 
   """All values that are not equal to given value."""
-  title_not: String
+  whatWasLearned_not: String
 
   """All values that are contained in given list."""
-  title_in: [String!]
+  whatWasLearned_in: [String!]
 
   """All values that are not contained in given list."""
-  title_not_in: [String!]
+  whatWasLearned_not_in: [String!]
 
   """All values less than the given value."""
-  title_lt: String
+  whatWasLearned_lt: String
 
   """All values less than or equal the given value."""
-  title_lte: String
+  whatWasLearned_lte: String
 
   """All values greater than the given value."""
-  title_gt: String
+  whatWasLearned_gt: String
 
   """All values greater than or equal the given value."""
-  title_gte: String
+  whatWasLearned_gte: String
 
   """All values containing the given string."""
-  title_contains: String
+  whatWasLearned_contains: String
 
   """All values not containing the given string."""
-  title_not_contains: String
+  whatWasLearned_not_contains: String
 
   """All values starting with the given string."""
-  title_starts_with: String
+  whatWasLearned_starts_with: String
 
   """All values not starting with the given string."""
-  title_not_starts_with: String
+  whatWasLearned_not_starts_with: String
 
   """All values ending with the given string."""
-  title_ends_with: String
+  whatWasLearned_ends_with: String
 
   """All values not ending with the given string."""
-  title_not_ends_with: String
-  presentationLearning: String
-
-  """All values that are not equal to given value."""
-  presentationLearning_not: String
-
-  """All values that are contained in given list."""
-  presentationLearning_in: [String!]
-
-  """All values that are not contained in given list."""
-  presentationLearning_not_in: [String!]
-
-  """All values less than the given value."""
-  presentationLearning_lt: String
-
-  """All values less than or equal the given value."""
-  presentationLearning_lte: String
-
-  """All values greater than the given value."""
-  presentationLearning_gt: String
-
-  """All values greater than or equal the given value."""
-  presentationLearning_gte: String
-
-  """All values containing the given string."""
-  presentationLearning_contains: String
-
-  """All values not containing the given string."""
-  presentationLearning_not_contains: String
-
-  """All values starting with the given string."""
-  presentationLearning_starts_with: String
-
-  """All values not starting with the given string."""
-  presentationLearning_not_starts_with: String
-
-  """All values ending with the given string."""
-  presentationLearning_ends_with: String
-
-  """All values not ending with the given string."""
-  presentationLearning_not_ends_with: String
+  whatWasLearned_not_ends_with: String
   createdBy: UserWhereInput
   questions_every: QuestionWhereInput
   questions_some: QuestionWhereInput
   questions_none: QuestionWhereInput
+  taggedUser_every: UserWhereInput
+  taggedUser_some: UserWhereInput
+  taggedUser_none: UserWhereInput
 }
 
 input PresentationWhereUniqueInput {
@@ -2279,6 +1921,7 @@ type User implements Node {
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   learning(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Learning!]
   taggedLearning(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Learning!]
+  taggedPresentation(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Presentation!]
   visible: Boolean!
   institution: String
 }
@@ -2306,10 +1949,16 @@ input UserCreateInput {
   questions: QuestionCreateManyWithoutCreatedByInput
   learning: LearningCreateManyWithoutCreatedByInput
   taggedLearning: LearningCreateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
 }
 
 input UserCreateManyWithoutTaggedLearningInput {
   create: [UserCreateWithoutTaggedLearningInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutTaggedPresentationInput {
+  create: [UserCreateWithoutTaggedPresentationInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -2344,6 +1993,7 @@ input UserCreateWithoutLearningInput {
   presentations: PresentationCreateManyWithoutCreatedByInput
   questions: QuestionCreateManyWithoutCreatedByInput
   taggedLearning: LearningCreateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
 }
 
 input UserCreateWithoutPresentationsInput {
@@ -2358,6 +2008,7 @@ input UserCreateWithoutPresentationsInput {
   questions: QuestionCreateManyWithoutCreatedByInput
   learning: LearningCreateManyWithoutCreatedByInput
   taggedLearning: LearningCreateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
 }
 
 input UserCreateWithoutQuestionsInput {
@@ -2372,6 +2023,7 @@ input UserCreateWithoutQuestionsInput {
   presentations: PresentationCreateManyWithoutCreatedByInput
   learning: LearningCreateManyWithoutCreatedByInput
   taggedLearning: LearningCreateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
 }
 
 input UserCreateWithoutTaggedLearningInput {
@@ -2386,6 +2038,22 @@ input UserCreateWithoutTaggedLearningInput {
   presentations: PresentationCreateManyWithoutCreatedByInput
   questions: QuestionCreateManyWithoutCreatedByInput
   learning: LearningCreateManyWithoutCreatedByInput
+  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
+}
+
+input UserCreateWithoutTaggedPresentationInput {
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  visible: Boolean
+  institution: String
+  permissions: UserCreatepermissionsInput
+  presentations: PresentationCreateManyWithoutCreatedByInput
+  questions: QuestionCreateManyWithoutCreatedByInput
+  learning: LearningCreateManyWithoutCreatedByInput
+  taggedLearning: LearningCreateManyWithoutTaggedUserInput
 }
 
 """An edge in a connection."""
@@ -2761,6 +2429,7 @@ input UserUpdateInput {
   questions: QuestionUpdateManyWithoutCreatedByInput
   learning: LearningUpdateManyWithoutCreatedByInput
   taggedLearning: LearningUpdateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateManyDataInput {
@@ -2796,6 +2465,17 @@ input UserUpdateManyWithoutTaggedLearningInput {
   upsert: [UserUpsertWithWhereUniqueWithoutTaggedLearningInput!]
 }
 
+input UserUpdateManyWithoutTaggedPresentationInput {
+  create: [UserCreateWithoutTaggedPresentationInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutTaggedPresentationInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutTaggedPresentationInput!]
+}
+
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
@@ -2808,20 +2488,18 @@ input UserUpdateOneRequiredWithoutLearningInput {
   upsert: UserUpsertWithoutLearningInput
 }
 
+input UserUpdateOneRequiredWithoutPresentationsInput {
+  create: UserCreateWithoutPresentationsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutPresentationsDataInput
+  upsert: UserUpsertWithoutPresentationsInput
+}
+
 input UserUpdateOneRequiredWithoutQuestionsInput {
   create: UserCreateWithoutQuestionsInput
   connect: UserWhereUniqueInput
   update: UserUpdateWithoutQuestionsDataInput
   upsert: UserUpsertWithoutQuestionsInput
-}
-
-input UserUpdateOneWithoutPresentationsInput {
-  create: UserCreateWithoutPresentationsInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: UserUpdateWithoutPresentationsDataInput
-  upsert: UserUpsertWithoutPresentationsInput
 }
 
 input UserUpdatepermissionsInput {
@@ -2840,6 +2518,7 @@ input UserUpdateWithoutLearningDataInput {
   presentations: PresentationUpdateManyWithoutCreatedByInput
   questions: QuestionUpdateManyWithoutCreatedByInput
   taggedLearning: LearningUpdateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateWithoutPresentationsDataInput {
@@ -2854,6 +2533,7 @@ input UserUpdateWithoutPresentationsDataInput {
   questions: QuestionUpdateManyWithoutCreatedByInput
   learning: LearningUpdateManyWithoutCreatedByInput
   taggedLearning: LearningUpdateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateWithoutQuestionsDataInput {
@@ -2868,6 +2548,7 @@ input UserUpdateWithoutQuestionsDataInput {
   presentations: PresentationUpdateManyWithoutCreatedByInput
   learning: LearningUpdateManyWithoutCreatedByInput
   taggedLearning: LearningUpdateManyWithoutTaggedUserInput
+  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateWithoutTaggedLearningDataInput {
@@ -2882,11 +2563,32 @@ input UserUpdateWithoutTaggedLearningDataInput {
   presentations: PresentationUpdateManyWithoutCreatedByInput
   questions: QuestionUpdateManyWithoutCreatedByInput
   learning: LearningUpdateManyWithoutCreatedByInput
+  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
+}
+
+input UserUpdateWithoutTaggedPresentationDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  visible: Boolean
+  institution: String
+  permissions: UserUpdatepermissionsInput
+  presentations: PresentationUpdateManyWithoutCreatedByInput
+  questions: QuestionUpdateManyWithoutCreatedByInput
+  learning: LearningUpdateManyWithoutCreatedByInput
+  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateWithWhereUniqueWithoutTaggedLearningInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutTaggedLearningDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutTaggedPresentationInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutTaggedPresentationDataInput!
 }
 
 input UserUpsertWithoutLearningInput {
@@ -2908,6 +2610,12 @@ input UserUpsertWithWhereUniqueWithoutTaggedLearningInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutTaggedLearningDataInput!
   create: UserCreateWithoutTaggedLearningInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutTaggedPresentationInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutTaggedPresentationDataInput!
+  create: UserCreateWithoutTaggedPresentationInput!
 }
 
 input UserWhereInput {
@@ -3197,6 +2905,9 @@ input UserWhereInput {
   taggedLearning_every: LearningWhereInput
   taggedLearning_some: LearningWhereInput
   taggedLearning_none: LearningWhereInput
+  taggedPresentation_every: PresentationWhereInput
+  taggedPresentation_some: PresentationWhereInput
+  taggedPresentation_none: PresentationWhereInput
 }
 
 input UserWhereUniqueInput {
