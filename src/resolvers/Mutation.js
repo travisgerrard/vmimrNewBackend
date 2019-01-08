@@ -5,6 +5,7 @@ const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
 const { hasPermission } = require('../utils');
 const stripe = require('../stripe');
+const { forwardTo } = require('prisma-binding');
 
 const mutations = {
   async signup(parent, args, ctx, info) {
@@ -137,7 +138,7 @@ const mutations = {
       return { id: user };
     });
 
-    const card = await ctx.db.mutation.createLearning(
+    const card = await ctx.db.mutation.createPresentation(
       {
         data: {
           ...args,
@@ -151,7 +152,8 @@ const mutations = {
           },
           tags: {
             set: args.tags
-          }
+          },
+          presentationType: 'Pearl'
         }
       },
       info
@@ -184,6 +186,9 @@ const mutations = {
           },
           tags: {
             set: args.tags
+          },
+          ddx: {
+            set: args.ddx
           }
         }
       },
@@ -191,6 +196,36 @@ const mutations = {
     );
 
     return presentation;
+  },
+
+  async batchLoadPresentation(parent, args, ctx, info) {
+    const presentation = await ctx.db.mutation.createPresentation(
+      {
+        data: {
+          ...args,
+          createdBy: {
+            connect: {
+              username: args.createdBy
+            }
+          },
+          tags: {
+            set: args.tags
+          },
+          ddx: {
+            set: args.ddx
+          }
+        }
+      },
+      info
+    );
+
+    return presentation;
+  },
+
+  async likePresentation(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that');
+    }
   }
 };
 

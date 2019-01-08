@@ -2,7 +2,8 @@ const { forwardTo } = require('prisma-binding');
 const { hasPermission } = require('../utils');
 
 const Query = {
-  learnings: forwardTo('db'),
+  presentations: forwardTo('db'),
+  presentation: forwardTo('db'),
   me(parent, args, ctx, info) {
     // check if there is a current user ID
     if (!ctx.request.userId) {
@@ -27,10 +28,6 @@ const Query = {
     // 2. if they do have permission, query all users
     return ctx.db.query.users({}, info);
   }
-
-  // learnings(parent, args, ctx, info) {
-  //   return ctx.db.query.learnings({}, info);
-  // }
 };
 
 module.exports = Query;

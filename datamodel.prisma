@@ -11,6 +11,7 @@ enum PresentationTypes {
   Specialist
   PrimaryCare
   InternSurvival
+  Pearl
 }
 
 enum RotationTags {
@@ -61,16 +62,21 @@ type Presentation {
   physicalExam: String
   summAssessment: String
   ddx: [String]
-  tags: [RotationTags]
+  tags: [RotationTags]!
   createdBy: User! @relation(name: "PresentationCreator")
   whatWasLearned: String!
   questions: [Question]
   taggedUser: [User]! @relation(name: "TaggedPresentation")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  myCreatedAt: DateTime
+  likes: [User]! @relation(name: "LikedPresentation")
 }
 
 type User {
   id: ID! @unique
   name: String!
+  username: String! @unique
   email: String! @unique
   password: String!
   resetToken: String
@@ -79,11 +85,10 @@ type User {
   presentations: [Presentation]
     @relation(name: "PresentationCreator", onDelete: CASCADE)
   questions: [Question]
-  learning: [Learning] @relation(name: "LearningCreator", onDelete: CASCADE)
-  taggedLearning: [Learning]
-    @relation(name: "TaggedLearning", onDelete: CASCADE)
   taggedPresentation: [Presentation]
     @relation(name: "TaggedPresentation", onDelete: CASCADE)
+  likedPresentations: [Presentation]
+    @relation(name: "LikedPresentation", onDelete: CASCADE)
   visible: Boolean! @default(value: "true")
   institution: String
 }
@@ -96,14 +101,4 @@ type Question {
   answers: [String]
   createdBy: User!
   presentation: Presentation!
-}
-
-type Learning {
-  id: ID! @unique
-  tags: [RotationTags]!
-  whatWasLearned: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  createdBy: User! @relation(name: "LearningCreator")
-  taggedUser: [User]! @relation(name: "TaggedLearning")
 }

@@ -1,9 +1,5 @@
 # source: https://us1.prisma.sh/travis-gerrard-c527f1/VMIMR/dev
-# timestamp: Mon Dec 31 2018 15:48:16 GMT-0800 (Pacific Standard Time)
-
-type AggregateLearning {
-  count: Int!
-}
+# timestamp: Sun Jan 06 2019 01:04:14 GMT-0800 (Pacific Standard Time)
 
 type AggregatePresentation {
   count: Int!
@@ -24,486 +20,6 @@ type BatchPayload {
 
 scalar DateTime
 
-type Learning implements Node {
-  id: ID!
-  tags: [RotationTags!]!
-  whatWasLearned: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  createdBy: User!
-  taggedUser(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-}
-
-"""A connection to a list of items."""
-type LearningConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [LearningEdge]!
-  aggregate: AggregateLearning!
-}
-
-input LearningCreateInput {
-  whatWasLearned: String!
-  tags: LearningCreatetagsInput
-  createdBy: UserCreateOneWithoutLearningInput!
-  taggedUser: UserCreateManyWithoutTaggedLearningInput
-}
-
-input LearningCreateManyWithoutCreatedByInput {
-  create: [LearningCreateWithoutCreatedByInput!]
-  connect: [LearningWhereUniqueInput!]
-}
-
-input LearningCreateManyWithoutTaggedUserInput {
-  create: [LearningCreateWithoutTaggedUserInput!]
-  connect: [LearningWhereUniqueInput!]
-}
-
-input LearningCreatetagsInput {
-  set: [RotationTags!]
-}
-
-input LearningCreateWithoutCreatedByInput {
-  whatWasLearned: String!
-  tags: LearningCreatetagsInput
-  taggedUser: UserCreateManyWithoutTaggedLearningInput
-}
-
-input LearningCreateWithoutTaggedUserInput {
-  whatWasLearned: String!
-  tags: LearningCreatetagsInput
-  createdBy: UserCreateOneWithoutLearningInput!
-}
-
-"""An edge in a connection."""
-type LearningEdge {
-  """The item at the end of the edge."""
-  node: Learning!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum LearningOrderByInput {
-  id_ASC
-  id_DESC
-  whatWasLearned_ASC
-  whatWasLearned_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type LearningPreviousValues {
-  id: ID!
-  tags: [RotationTags!]!
-  whatWasLearned: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-input LearningScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LearningScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LearningScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LearningScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  whatWasLearned: String
-
-  """All values that are not equal to given value."""
-  whatWasLearned_not: String
-
-  """All values that are contained in given list."""
-  whatWasLearned_in: [String!]
-
-  """All values that are not contained in given list."""
-  whatWasLearned_not_in: [String!]
-
-  """All values less than the given value."""
-  whatWasLearned_lt: String
-
-  """All values less than or equal the given value."""
-  whatWasLearned_lte: String
-
-  """All values greater than the given value."""
-  whatWasLearned_gt: String
-
-  """All values greater than or equal the given value."""
-  whatWasLearned_gte: String
-
-  """All values containing the given string."""
-  whatWasLearned_contains: String
-
-  """All values not containing the given string."""
-  whatWasLearned_not_contains: String
-
-  """All values starting with the given string."""
-  whatWasLearned_starts_with: String
-
-  """All values not starting with the given string."""
-  whatWasLearned_not_starts_with: String
-
-  """All values ending with the given string."""
-  whatWasLearned_ends_with: String
-
-  """All values not ending with the given string."""
-  whatWasLearned_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-}
-
-type LearningSubscriptionPayload {
-  mutation: MutationType!
-  node: Learning
-  updatedFields: [String!]
-  previousValues: LearningPreviousValues
-}
-
-input LearningSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LearningSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LearningSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LearningSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: LearningWhereInput
-}
-
-input LearningUpdateInput {
-  whatWasLearned: String
-  tags: LearningUpdatetagsInput
-  createdBy: UserUpdateOneRequiredWithoutLearningInput
-  taggedUser: UserUpdateManyWithoutTaggedLearningInput
-}
-
-input LearningUpdateManyDataInput {
-  whatWasLearned: String
-  tags: LearningUpdatetagsInput
-}
-
-input LearningUpdateManyMutationInput {
-  whatWasLearned: String
-  tags: LearningUpdatetagsInput
-}
-
-input LearningUpdateManyWithoutCreatedByInput {
-  create: [LearningCreateWithoutCreatedByInput!]
-  connect: [LearningWhereUniqueInput!]
-  disconnect: [LearningWhereUniqueInput!]
-  delete: [LearningWhereUniqueInput!]
-  update: [LearningUpdateWithWhereUniqueWithoutCreatedByInput!]
-  updateMany: [LearningUpdateManyWithWhereNestedInput!]
-  deleteMany: [LearningScalarWhereInput!]
-  upsert: [LearningUpsertWithWhereUniqueWithoutCreatedByInput!]
-}
-
-input LearningUpdateManyWithoutTaggedUserInput {
-  create: [LearningCreateWithoutTaggedUserInput!]
-  connect: [LearningWhereUniqueInput!]
-  disconnect: [LearningWhereUniqueInput!]
-  delete: [LearningWhereUniqueInput!]
-  update: [LearningUpdateWithWhereUniqueWithoutTaggedUserInput!]
-  updateMany: [LearningUpdateManyWithWhereNestedInput!]
-  deleteMany: [LearningScalarWhereInput!]
-  upsert: [LearningUpsertWithWhereUniqueWithoutTaggedUserInput!]
-}
-
-input LearningUpdateManyWithWhereNestedInput {
-  where: LearningScalarWhereInput!
-  data: LearningUpdateManyDataInput!
-}
-
-input LearningUpdatetagsInput {
-  set: [RotationTags!]
-}
-
-input LearningUpdateWithoutCreatedByDataInput {
-  whatWasLearned: String
-  tags: LearningUpdatetagsInput
-  taggedUser: UserUpdateManyWithoutTaggedLearningInput
-}
-
-input LearningUpdateWithoutTaggedUserDataInput {
-  whatWasLearned: String
-  tags: LearningUpdatetagsInput
-  createdBy: UserUpdateOneRequiredWithoutLearningInput
-}
-
-input LearningUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: LearningWhereUniqueInput!
-  data: LearningUpdateWithoutCreatedByDataInput!
-}
-
-input LearningUpdateWithWhereUniqueWithoutTaggedUserInput {
-  where: LearningWhereUniqueInput!
-  data: LearningUpdateWithoutTaggedUserDataInput!
-}
-
-input LearningUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: LearningWhereUniqueInput!
-  update: LearningUpdateWithoutCreatedByDataInput!
-  create: LearningCreateWithoutCreatedByInput!
-}
-
-input LearningUpsertWithWhereUniqueWithoutTaggedUserInput {
-  where: LearningWhereUniqueInput!
-  update: LearningUpdateWithoutTaggedUserDataInput!
-  create: LearningCreateWithoutTaggedUserInput!
-}
-
-input LearningWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LearningWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LearningWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LearningWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  whatWasLearned: String
-
-  """All values that are not equal to given value."""
-  whatWasLearned_not: String
-
-  """All values that are contained in given list."""
-  whatWasLearned_in: [String!]
-
-  """All values that are not contained in given list."""
-  whatWasLearned_not_in: [String!]
-
-  """All values less than the given value."""
-  whatWasLearned_lt: String
-
-  """All values less than or equal the given value."""
-  whatWasLearned_lte: String
-
-  """All values greater than the given value."""
-  whatWasLearned_gt: String
-
-  """All values greater than or equal the given value."""
-  whatWasLearned_gte: String
-
-  """All values containing the given string."""
-  whatWasLearned_contains: String
-
-  """All values not containing the given string."""
-  whatWasLearned_not_contains: String
-
-  """All values starting with the given string."""
-  whatWasLearned_starts_with: String
-
-  """All values not starting with the given string."""
-  whatWasLearned_not_starts_with: String
-
-  """All values ending with the given string."""
-  whatWasLearned_ends_with: String
-
-  """All values not ending with the given string."""
-  whatWasLearned_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  createdBy: UserWhereInput
-  taggedUser_every: UserWhereInput
-  taggedUser_some: UserWhereInput
-  taggedUser_none: UserWhereInput
-}
-
-input LearningWhereUniqueInput {
-  id: ID
-}
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -514,27 +30,21 @@ type Mutation {
   createPresentation(data: PresentationCreateInput!): Presentation!
   createUser(data: UserCreateInput!): User!
   createQuestion(data: QuestionCreateInput!): Question!
-  createLearning(data: LearningCreateInput!): Learning!
   updatePresentation(data: PresentationUpdateInput!, where: PresentationWhereUniqueInput!): Presentation
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
-  updateLearning(data: LearningUpdateInput!, where: LearningWhereUniqueInput!): Learning
   deletePresentation(where: PresentationWhereUniqueInput!): Presentation
   deleteUser(where: UserWhereUniqueInput!): User
   deleteQuestion(where: QuestionWhereUniqueInput!): Question
-  deleteLearning(where: LearningWhereUniqueInput!): Learning
   upsertPresentation(where: PresentationWhereUniqueInput!, create: PresentationCreateInput!, update: PresentationUpdateInput!): Presentation!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertQuestion(where: QuestionWhereUniqueInput!, create: QuestionCreateInput!, update: QuestionUpdateInput!): Question!
-  upsertLearning(where: LearningWhereUniqueInput!, create: LearningCreateInput!, update: LearningUpdateInput!): Learning!
   updateManyPresentations(data: PresentationUpdateManyMutationInput!, where: PresentationWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyQuestions(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
-  updateManyLearnings(data: LearningUpdateManyMutationInput!, where: LearningWhereInput): BatchPayload!
   deleteManyPresentations(where: PresentationWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyQuestions(where: QuestionWhereInput): BatchPayload!
-  deleteManyLearnings(where: LearningWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -582,6 +92,10 @@ type Presentation implements Node {
   whatWasLearned: String!
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
   taggedUser(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  myCreatedAt: DateTime
+  likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 """A connection to a list of items."""
@@ -604,15 +118,22 @@ input PresentationCreateInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
+  myCreatedAt: DateTime
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
   questions: QuestionCreateManyWithoutPresentationInput
   taggedUser: UserCreateManyWithoutTaggedPresentationInput
+  likes: UserCreateManyWithoutLikedPresentationsInput
 }
 
 input PresentationCreateManyWithoutCreatedByInput {
   create: [PresentationCreateWithoutCreatedByInput!]
+  connect: [PresentationWhereUniqueInput!]
+}
+
+input PresentationCreateManyWithoutLikesInput {
+  create: [PresentationCreateWithoutLikesInput!]
   connect: [PresentationWhereUniqueInput!]
 }
 
@@ -636,8 +157,24 @@ input PresentationCreateWithoutCreatedByInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
+  myCreatedAt: DateTime
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
+  questions: QuestionCreateManyWithoutPresentationInput
+  taggedUser: UserCreateManyWithoutTaggedPresentationInput
+  likes: UserCreateManyWithoutLikedPresentationsInput
+}
+
+input PresentationCreateWithoutLikesInput {
+  presentationType: PresentationTypes
+  hpi: String
+  physicalExam: String
+  summAssessment: String
+  whatWasLearned: String!
+  myCreatedAt: DateTime
+  ddx: PresentationCreateddxInput
+  tags: PresentationCreatetagsInput
+  createdBy: UserCreateOneWithoutPresentationsInput!
   questions: QuestionCreateManyWithoutPresentationInput
   taggedUser: UserCreateManyWithoutTaggedPresentationInput
 }
@@ -648,10 +185,12 @@ input PresentationCreateWithoutQuestionsInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
+  myCreatedAt: DateTime
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
   taggedUser: UserCreateManyWithoutTaggedPresentationInput
+  likes: UserCreateManyWithoutLikedPresentationsInput
 }
 
 input PresentationCreateWithoutTaggedUserInput {
@@ -660,10 +199,12 @@ input PresentationCreateWithoutTaggedUserInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
+  myCreatedAt: DateTime
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
   questions: QuestionCreateManyWithoutPresentationInput
+  likes: UserCreateManyWithoutLikedPresentationsInput
 }
 
 """An edge in a connection."""
@@ -688,10 +229,12 @@ enum PresentationOrderByInput {
   summAssessment_DESC
   whatWasLearned_ASC
   whatWasLearned_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  myCreatedAt_ASC
+  myCreatedAt_DESC
 }
 
 type PresentationPreviousValues {
@@ -703,6 +246,9 @@ type PresentationPreviousValues {
   ddx: [String!]!
   tags: [RotationTags!]!
   whatWasLearned: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  myCreatedAt: DateTime
 }
 
 input PresentationScalarWhereInput {
@@ -924,6 +470,72 @@ input PresentationScalarWhereInput {
 
   """All values not ending with the given string."""
   whatWasLearned_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  myCreatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  myCreatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  myCreatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  myCreatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  myCreatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  myCreatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  myCreatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  myCreatedAt_gte: DateTime
 }
 
 type PresentationSubscriptionPayload {
@@ -972,6 +584,7 @@ enum PresentationTypes {
   Specialist
   PrimaryCare
   InternSurvival
+  Pearl
 }
 
 input PresentationUpdateddxInput {
@@ -984,11 +597,13 @@ input PresentationUpdateInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutPresentationsInput
   questions: QuestionUpdateManyWithoutPresentationInput
   taggedUser: UserUpdateManyWithoutTaggedPresentationInput
+  likes: UserUpdateManyWithoutLikedPresentationsInput
 }
 
 input PresentationUpdateManyDataInput {
@@ -997,6 +612,7 @@ input PresentationUpdateManyDataInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
 }
@@ -1007,6 +623,7 @@ input PresentationUpdateManyMutationInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
 }
@@ -1020,6 +637,17 @@ input PresentationUpdateManyWithoutCreatedByInput {
   updateMany: [PresentationUpdateManyWithWhereNestedInput!]
   deleteMany: [PresentationScalarWhereInput!]
   upsert: [PresentationUpsertWithWhereUniqueWithoutCreatedByInput!]
+}
+
+input PresentationUpdateManyWithoutLikesInput {
+  create: [PresentationCreateWithoutLikesInput!]
+  connect: [PresentationWhereUniqueInput!]
+  disconnect: [PresentationWhereUniqueInput!]
+  delete: [PresentationWhereUniqueInput!]
+  update: [PresentationUpdateWithWhereUniqueWithoutLikesInput!]
+  updateMany: [PresentationUpdateManyWithWhereNestedInput!]
+  deleteMany: [PresentationScalarWhereInput!]
+  upsert: [PresentationUpsertWithWhereUniqueWithoutLikesInput!]
 }
 
 input PresentationUpdateManyWithoutTaggedUserInput {
@@ -1055,8 +683,24 @@ input PresentationUpdateWithoutCreatedByDataInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
+  questions: QuestionUpdateManyWithoutPresentationInput
+  taggedUser: UserUpdateManyWithoutTaggedPresentationInput
+  likes: UserUpdateManyWithoutLikedPresentationsInput
+}
+
+input PresentationUpdateWithoutLikesDataInput {
+  presentationType: PresentationTypes
+  hpi: String
+  physicalExam: String
+  summAssessment: String
+  whatWasLearned: String
+  myCreatedAt: DateTime
+  ddx: PresentationUpdateddxInput
+  tags: PresentationUpdatetagsInput
+  createdBy: UserUpdateOneRequiredWithoutPresentationsInput
   questions: QuestionUpdateManyWithoutPresentationInput
   taggedUser: UserUpdateManyWithoutTaggedPresentationInput
 }
@@ -1067,10 +711,12 @@ input PresentationUpdateWithoutQuestionsDataInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutPresentationsInput
   taggedUser: UserUpdateManyWithoutTaggedPresentationInput
+  likes: UserUpdateManyWithoutLikedPresentationsInput
 }
 
 input PresentationUpdateWithoutTaggedUserDataInput {
@@ -1079,15 +725,22 @@ input PresentationUpdateWithoutTaggedUserDataInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String
+  myCreatedAt: DateTime
   ddx: PresentationUpdateddxInput
   tags: PresentationUpdatetagsInput
   createdBy: UserUpdateOneRequiredWithoutPresentationsInput
   questions: QuestionUpdateManyWithoutPresentationInput
+  likes: UserUpdateManyWithoutLikedPresentationsInput
 }
 
 input PresentationUpdateWithWhereUniqueWithoutCreatedByInput {
   where: PresentationWhereUniqueInput!
   data: PresentationUpdateWithoutCreatedByDataInput!
+}
+
+input PresentationUpdateWithWhereUniqueWithoutLikesInput {
+  where: PresentationWhereUniqueInput!
+  data: PresentationUpdateWithoutLikesDataInput!
 }
 
 input PresentationUpdateWithWhereUniqueWithoutTaggedUserInput {
@@ -1104,6 +757,12 @@ input PresentationUpsertWithWhereUniqueWithoutCreatedByInput {
   where: PresentationWhereUniqueInput!
   update: PresentationUpdateWithoutCreatedByDataInput!
   create: PresentationCreateWithoutCreatedByInput!
+}
+
+input PresentationUpsertWithWhereUniqueWithoutLikesInput {
+  where: PresentationWhereUniqueInput!
+  update: PresentationUpdateWithoutLikesDataInput!
+  create: PresentationCreateWithoutLikesInput!
 }
 
 input PresentationUpsertWithWhereUniqueWithoutTaggedUserInput {
@@ -1331,6 +990,72 @@ input PresentationWhereInput {
 
   """All values not ending with the given string."""
   whatWasLearned_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  myCreatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  myCreatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  myCreatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  myCreatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  myCreatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  myCreatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  myCreatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  myCreatedAt_gte: DateTime
   createdBy: UserWhereInput
   questions_every: QuestionWhereInput
   questions_some: QuestionWhereInput
@@ -1338,6 +1063,9 @@ input PresentationWhereInput {
   taggedUser_every: UserWhereInput
   taggedUser_some: UserWhereInput
   taggedUser_none: UserWhereInput
+  likes_every: UserWhereInput
+  likes_some: UserWhereInput
+  likes_none: UserWhereInput
 }
 
 input PresentationWhereUniqueInput {
@@ -1348,15 +1076,12 @@ type Query {
   presentations(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Presentation]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question]!
-  learnings(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Learning]!
   presentation(where: PresentationWhereUniqueInput!): Presentation
   user(where: UserWhereUniqueInput!): User
   question(where: QuestionWhereUniqueInput!): Question
-  learning(where: LearningWhereUniqueInput!): Learning
   presentationsConnection(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PresentationConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   questionsConnection(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuestionConnection!
-  learningsConnection(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LearningConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1906,12 +1631,12 @@ type Subscription {
   presentation(where: PresentationSubscriptionWhereInput): PresentationSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
-  learning(where: LearningSubscriptionWhereInput): LearningSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -1919,9 +1644,8 @@ type User implements Node {
   permissions: [Permission!]!
   presentations(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Presentation!]
   questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
-  learning(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Learning!]
-  taggedLearning(where: LearningWhereInput, orderBy: LearningOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Learning!]
   taggedPresentation(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Presentation!]
+  likedPresentations(where: PresentationWhereInput, orderBy: PresentationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Presentation!]
   visible: Boolean!
   institution: String
 }
@@ -1938,6 +1662,7 @@ type UserConnection {
 
 input UserCreateInput {
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -1947,24 +1672,18 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
   presentations: PresentationCreateManyWithoutCreatedByInput
   questions: QuestionCreateManyWithoutCreatedByInput
-  learning: LearningCreateManyWithoutCreatedByInput
-  taggedLearning: LearningCreateManyWithoutTaggedUserInput
   taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
+  likedPresentations: PresentationCreateManyWithoutLikesInput
 }
 
-input UserCreateManyWithoutTaggedLearningInput {
-  create: [UserCreateWithoutTaggedLearningInput!]
+input UserCreateManyWithoutLikedPresentationsInput {
+  create: [UserCreateWithoutLikedPresentationsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutTaggedPresentationInput {
   create: [UserCreateWithoutTaggedPresentationInput!]
   connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateOneWithoutLearningInput {
-  create: UserCreateWithoutLearningInput
-  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPresentationsInput {
@@ -1981,8 +1700,9 @@ input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
-input UserCreateWithoutLearningInput {
+input UserCreateWithoutLikedPresentationsInput {
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -1992,12 +1712,12 @@ input UserCreateWithoutLearningInput {
   permissions: UserCreatepermissionsInput
   presentations: PresentationCreateManyWithoutCreatedByInput
   questions: QuestionCreateManyWithoutCreatedByInput
-  taggedLearning: LearningCreateManyWithoutTaggedUserInput
   taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
 }
 
 input UserCreateWithoutPresentationsInput {
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -2006,13 +1726,13 @@ input UserCreateWithoutPresentationsInput {
   institution: String
   permissions: UserCreatepermissionsInput
   questions: QuestionCreateManyWithoutCreatedByInput
-  learning: LearningCreateManyWithoutCreatedByInput
-  taggedLearning: LearningCreateManyWithoutTaggedUserInput
   taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
+  likedPresentations: PresentationCreateManyWithoutLikesInput
 }
 
 input UserCreateWithoutQuestionsInput {
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -2021,28 +1741,13 @@ input UserCreateWithoutQuestionsInput {
   institution: String
   permissions: UserCreatepermissionsInput
   presentations: PresentationCreateManyWithoutCreatedByInput
-  learning: LearningCreateManyWithoutCreatedByInput
-  taggedLearning: LearningCreateManyWithoutTaggedUserInput
   taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
-}
-
-input UserCreateWithoutTaggedLearningInput {
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  visible: Boolean
-  institution: String
-  permissions: UserCreatepermissionsInput
-  presentations: PresentationCreateManyWithoutCreatedByInput
-  questions: QuestionCreateManyWithoutCreatedByInput
-  learning: LearningCreateManyWithoutCreatedByInput
-  taggedPresentation: PresentationCreateManyWithoutTaggedUserInput
+  likedPresentations: PresentationCreateManyWithoutLikesInput
 }
 
 input UserCreateWithoutTaggedPresentationInput {
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -2052,8 +1757,7 @@ input UserCreateWithoutTaggedPresentationInput {
   permissions: UserCreatepermissionsInput
   presentations: PresentationCreateManyWithoutCreatedByInput
   questions: QuestionCreateManyWithoutCreatedByInput
-  learning: LearningCreateManyWithoutCreatedByInput
-  taggedLearning: LearningCreateManyWithoutTaggedUserInput
+  likedPresentations: PresentationCreateManyWithoutLikesInput
 }
 
 """An edge in a connection."""
@@ -2070,6 +1774,8 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  username_ASC
+  username_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -2091,6 +1797,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  username: String!
   email: String!
   password: String!
   resetToken: String
@@ -2189,6 +1896,46 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
   email: String
 
   """All values that are not equal to given value."""
@@ -2418,6 +2165,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2427,13 +2175,13 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
   presentations: PresentationUpdateManyWithoutCreatedByInput
   questions: QuestionUpdateManyWithoutCreatedByInput
-  learning: LearningUpdateManyWithoutCreatedByInput
-  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
   taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
+  likedPresentations: PresentationUpdateManyWithoutLikesInput
 }
 
 input UserUpdateManyDataInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2445,6 +2193,7 @@ input UserUpdateManyDataInput {
 
 input UserUpdateManyMutationInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2454,15 +2203,15 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
-input UserUpdateManyWithoutTaggedLearningInput {
-  create: [UserCreateWithoutTaggedLearningInput!]
+input UserUpdateManyWithoutLikedPresentationsInput {
+  create: [UserCreateWithoutLikedPresentationsInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutTaggedLearningInput!]
+  update: [UserUpdateWithWhereUniqueWithoutLikedPresentationsInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
   deleteMany: [UserScalarWhereInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutTaggedLearningInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutLikedPresentationsInput!]
 }
 
 input UserUpdateManyWithoutTaggedPresentationInput {
@@ -2479,13 +2228,6 @@ input UserUpdateManyWithoutTaggedPresentationInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
-}
-
-input UserUpdateOneRequiredWithoutLearningInput {
-  create: UserCreateWithoutLearningInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutLearningDataInput
-  upsert: UserUpsertWithoutLearningInput
 }
 
 input UserUpdateOneRequiredWithoutPresentationsInput {
@@ -2506,8 +2248,9 @@ input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
-input UserUpdateWithoutLearningDataInput {
+input UserUpdateWithoutLikedPresentationsDataInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2517,12 +2260,12 @@ input UserUpdateWithoutLearningDataInput {
   permissions: UserUpdatepermissionsInput
   presentations: PresentationUpdateManyWithoutCreatedByInput
   questions: QuestionUpdateManyWithoutCreatedByInput
-  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
   taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
 }
 
 input UserUpdateWithoutPresentationsDataInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2531,13 +2274,13 @@ input UserUpdateWithoutPresentationsDataInput {
   institution: String
   permissions: UserUpdatepermissionsInput
   questions: QuestionUpdateManyWithoutCreatedByInput
-  learning: LearningUpdateManyWithoutCreatedByInput
-  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
   taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
+  likedPresentations: PresentationUpdateManyWithoutLikesInput
 }
 
 input UserUpdateWithoutQuestionsDataInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2546,28 +2289,13 @@ input UserUpdateWithoutQuestionsDataInput {
   institution: String
   permissions: UserUpdatepermissionsInput
   presentations: PresentationUpdateManyWithoutCreatedByInput
-  learning: LearningUpdateManyWithoutCreatedByInput
-  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
   taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
-}
-
-input UserUpdateWithoutTaggedLearningDataInput {
-  name: String
-  email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: Float
-  visible: Boolean
-  institution: String
-  permissions: UserUpdatepermissionsInput
-  presentations: PresentationUpdateManyWithoutCreatedByInput
-  questions: QuestionUpdateManyWithoutCreatedByInput
-  learning: LearningUpdateManyWithoutCreatedByInput
-  taggedPresentation: PresentationUpdateManyWithoutTaggedUserInput
+  likedPresentations: PresentationUpdateManyWithoutLikesInput
 }
 
 input UserUpdateWithoutTaggedPresentationDataInput {
   name: String
+  username: String
   email: String
   password: String
   resetToken: String
@@ -2577,23 +2305,17 @@ input UserUpdateWithoutTaggedPresentationDataInput {
   permissions: UserUpdatepermissionsInput
   presentations: PresentationUpdateManyWithoutCreatedByInput
   questions: QuestionUpdateManyWithoutCreatedByInput
-  learning: LearningUpdateManyWithoutCreatedByInput
-  taggedLearning: LearningUpdateManyWithoutTaggedUserInput
+  likedPresentations: PresentationUpdateManyWithoutLikesInput
 }
 
-input UserUpdateWithWhereUniqueWithoutTaggedLearningInput {
+input UserUpdateWithWhereUniqueWithoutLikedPresentationsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutTaggedLearningDataInput!
+  data: UserUpdateWithoutLikedPresentationsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutTaggedPresentationInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutTaggedPresentationDataInput!
-}
-
-input UserUpsertWithoutLearningInput {
-  update: UserUpdateWithoutLearningDataInput!
-  create: UserCreateWithoutLearningInput!
 }
 
 input UserUpsertWithoutPresentationsInput {
@@ -2606,10 +2328,10 @@ input UserUpsertWithoutQuestionsInput {
   create: UserCreateWithoutQuestionsInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutTaggedLearningInput {
+input UserUpsertWithWhereUniqueWithoutLikedPresentationsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutTaggedLearningDataInput!
-  create: UserCreateWithoutTaggedLearningInput!
+  update: UserUpdateWithoutLikedPresentationsDataInput!
+  create: UserCreateWithoutLikedPresentationsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutTaggedPresentationInput {
@@ -2707,6 +2429,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
   email: String
 
   """All values that are not equal to given value."""
@@ -2899,18 +2661,16 @@ input UserWhereInput {
   questions_every: QuestionWhereInput
   questions_some: QuestionWhereInput
   questions_none: QuestionWhereInput
-  learning_every: LearningWhereInput
-  learning_some: LearningWhereInput
-  learning_none: LearningWhereInput
-  taggedLearning_every: LearningWhereInput
-  taggedLearning_some: LearningWhereInput
-  taggedLearning_none: LearningWhereInput
   taggedPresentation_every: PresentationWhereInput
   taggedPresentation_some: PresentationWhereInput
   taggedPresentation_none: PresentationWhereInput
+  likedPresentations_every: PresentationWhereInput
+  likedPresentations_some: PresentationWhereInput
+  likedPresentations_none: PresentationWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
+  username: String
   email: String
 }

@@ -5,7 +5,12 @@ type SuccessMessage {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): User!
+  signup(
+    email: String!
+    password: String!
+    name: String!
+    username: String!
+  ): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
   requestReset(email: String!): SuccessMessage
@@ -18,7 +23,7 @@ type Mutation {
     whatWasLearned: String!
     tags: [RotationTags]!
     taggedUser: [ID]!
-  ): Learning!
+  ): Presentation!
   createPresentation(
     presentationType: PresentationTypes!
     hpi: String!
@@ -29,10 +34,29 @@ type Mutation {
     whatWasLearned: String!
     taggedUser: [ID]!
   ): Presentation!
+  likePresentation(presentation: ID!): Presentation
+  batchLoadPresentation(
+    presentationType: PresentationTypes!
+    hpi: String!
+    physicalExam: String!
+    summAssessment: String!
+    ddx: [String]!
+    tags: [RotationTags]!
+    whatWasLearned: String!
+    taggedUser: [ID]!
+    createdBy: String!
+    myCreatedAt: DateTime
+  ): Presentation!
 }
 
 type Query {
   me: User
   users: [User]!
-  learnings(orderBy: LearningOrderByInput): [Learning]!
+  presentation(where: PresentationWhereUniqueInput!): Presentation
+  presentations(
+    where: PresentationWhereInput
+    orderBy: PresentationOrderByInput
+    first: Int
+    skip: Int
+  ): [Presentation]!
 }
