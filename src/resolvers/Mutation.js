@@ -223,8 +223,53 @@ const mutations = {
   },
 
   async likePresentation(parent, args, ctx, info) {
+    // console.log(args);
+
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that');
+    }
+
+    const presentation = await ctx.db.query.presentation({
+      where: {
+        id: args.id
+      }
+    });
+
+    // console.log(presentation);
+
+    if (!presentation.likes) {
+      const updatedPresentation = await ctx.db.mutation.updatePresentation({
+        where: { id: args.id },
+        data: {
+          likes: {
+            connect: [{ id: ctx.request.userId }]
+          }
+        },
+        info
+      });
+
+      return updatedPresentation;
+    }
+
+    if (presentation.likes.contains(args.likes)) {
+      const updatedPresentation = await ctx.db.mutation.updatePresentation({
+        where: { id: args.id },
+        data: {
+          likes: presentation.likes.filter(function(likes) {
+            return likes !== args.likes;
+          })
+        },
+        info
+      });
+      return updatedPresentation;
+    } else {
+      const updatedPresentation = await ctx.db.mutation.updatePresentation({
+        where: { id: args.id },
+        data: {
+          likes: [...presentation.likes, args.likes]
+        }
+      });
+      return updatedPresentation;
     }
   }
 };

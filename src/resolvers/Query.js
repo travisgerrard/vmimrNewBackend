@@ -4,6 +4,7 @@ const { hasPermission } = require('../utils');
 const Query = {
   presentations: forwardTo('db'),
   presentation: forwardTo('db'),
+  user: forwardTo('db'),
   me(parent, args, ctx, info) {
     // check if there is a current user ID
     if (!ctx.request.userId) {

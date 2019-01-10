@@ -34,7 +34,7 @@ type Mutation {
     whatWasLearned: String!
     taggedUser: [ID]!
   ): Presentation!
-  likePresentation(presentation: ID!): Presentation
+  likePresentation(id: ID!): Presentation
   batchLoadPresentation(
     presentationType: PresentationTypes!
     hpi: String!
@@ -51,6 +51,7 @@ type Mutation {
 
 type Query {
   me: User
+  user(where: UserWhereUniqueInput!): User
   users: [User]!
   presentation(where: PresentationWhereUniqueInput!): Presentation
   presentations(
