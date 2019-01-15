@@ -33,8 +33,23 @@ type Mutation {
     tags: [RotationTags]!
     whatWasLearned: String!
     taggedUser: [ID]!
+    myCreaatedAt: DateTime!
+  ): Presentation!
+  updatePresentation(
+    id: ID!
+    presentationType: PresentationTypes!
+    hpi: String!
+    physicalExam: String!
+    summAssessment: String!
+    ddx: [String]!
+    tags: [RotationTags]!
+    whatWasLearned: String!
+    taggedUser: [ID]!
+    createdBy: ID!
+    myCreatedAt: DateTime!
   ): Presentation!
   likePresentation(id: ID!): Presentation
+  deletePresentation(id: ID!): Presentation
   batchLoadPresentation(
     presentationType: PresentationTypes!
     hpi: String!
@@ -45,8 +60,17 @@ type Mutation {
     whatWasLearned: String!
     taggedUser: [ID]!
     createdBy: String!
-    myCreatedAt: DateTime
+    myCreatedAt: DateTime!
   ): Presentation!
+  batchLoadLearning(
+    presentationType: PresentationTypes!
+    tags: [RotationTags]!
+    whatWasLearned: String!
+    taggedUser: [ID]!
+    createdBy: String!
+    myCreatedAt: DateTime!
+  ): Presentation!
+  deleteAllPresentations(presentationType: PresentationTypes!): Presentation
 }
 
 type Query {

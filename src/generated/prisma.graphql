@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/travis-gerrard-c527f1/VMIMR/dev
-# timestamp: Sun Jan 06 2019 01:04:14 GMT-0800 (Pacific Standard Time)
+# timestamp: Fri Jan 11 2019 17:44:44 GMT-0800 (Pacific Standard Time)
 
 type AggregatePresentation {
   count: Int!
@@ -94,7 +94,7 @@ type Presentation implements Node {
   taggedUser(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
@@ -118,7 +118,7 @@ input PresentationCreateInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
@@ -157,7 +157,7 @@ input PresentationCreateWithoutCreatedByInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   questions: QuestionCreateManyWithoutPresentationInput
@@ -171,7 +171,7 @@ input PresentationCreateWithoutLikesInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
@@ -185,7 +185,7 @@ input PresentationCreateWithoutQuestionsInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
@@ -199,7 +199,7 @@ input PresentationCreateWithoutTaggedUserInput {
   physicalExam: String
   summAssessment: String
   whatWasLearned: String!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
   ddx: PresentationCreateddxInput
   tags: PresentationCreatetagsInput
   createdBy: UserCreateOneWithoutPresentationsInput!
@@ -248,7 +248,7 @@ type PresentationPreviousValues {
   whatWasLearned: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  myCreatedAt: DateTime
+  myCreatedAt: DateTime!
 }
 
 input PresentationScalarWhereInput {
@@ -631,6 +631,7 @@ input PresentationUpdateManyMutationInput {
 input PresentationUpdateManyWithoutCreatedByInput {
   create: [PresentationCreateWithoutCreatedByInput!]
   connect: [PresentationWhereUniqueInput!]
+  set: [PresentationWhereUniqueInput!]
   disconnect: [PresentationWhereUniqueInput!]
   delete: [PresentationWhereUniqueInput!]
   update: [PresentationUpdateWithWhereUniqueWithoutCreatedByInput!]
@@ -642,6 +643,7 @@ input PresentationUpdateManyWithoutCreatedByInput {
 input PresentationUpdateManyWithoutLikesInput {
   create: [PresentationCreateWithoutLikesInput!]
   connect: [PresentationWhereUniqueInput!]
+  set: [PresentationWhereUniqueInput!]
   disconnect: [PresentationWhereUniqueInput!]
   delete: [PresentationWhereUniqueInput!]
   update: [PresentationUpdateWithWhereUniqueWithoutLikesInput!]
@@ -653,6 +655,7 @@ input PresentationUpdateManyWithoutLikesInput {
 input PresentationUpdateManyWithoutTaggedUserInput {
   create: [PresentationCreateWithoutTaggedUserInput!]
   connect: [PresentationWhereUniqueInput!]
+  set: [PresentationWhereUniqueInput!]
   disconnect: [PresentationWhereUniqueInput!]
   delete: [PresentationWhereUniqueInput!]
   update: [PresentationUpdateWithWhereUniqueWithoutTaggedUserInput!]
@@ -1387,6 +1390,7 @@ input QuestionUpdateManyMutationInput {
 input QuestionUpdateManyWithoutCreatedByInput {
   create: [QuestionCreateWithoutCreatedByInput!]
   connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
   disconnect: [QuestionWhereUniqueInput!]
   delete: [QuestionWhereUniqueInput!]
   update: [QuestionUpdateWithWhereUniqueWithoutCreatedByInput!]
@@ -1398,6 +1402,7 @@ input QuestionUpdateManyWithoutCreatedByInput {
 input QuestionUpdateManyWithoutPresentationInput {
   create: [QuestionCreateWithoutPresentationInput!]
   connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
   disconnect: [QuestionWhereUniqueInput!]
   delete: [QuestionWhereUniqueInput!]
   update: [QuestionUpdateWithWhereUniqueWithoutPresentationInput!]
@@ -2206,6 +2211,7 @@ input UserUpdateManyMutationInput {
 input UserUpdateManyWithoutLikedPresentationsInput {
   create: [UserCreateWithoutLikedPresentationsInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutLikedPresentationsInput!]
@@ -2217,6 +2223,7 @@ input UserUpdateManyWithoutLikedPresentationsInput {
 input UserUpdateManyWithoutTaggedPresentationInput {
   create: [UserCreateWithoutTaggedPresentationInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutTaggedPresentationInput!]
@@ -2671,6 +2678,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  name: String
   username: String
   email: String
 }

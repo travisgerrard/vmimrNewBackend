@@ -153,7 +153,8 @@ const mutations = {
           tags: {
             set: args.tags
           },
-          presentationType: 'Pearl'
+          presentationType: 'Pearl',
+          myCreatedAt: new Date()
         }
       },
       info
@@ -198,7 +199,56 @@ const mutations = {
     return presentation;
   },
 
+  async updatePresentation(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that');
+    }
+
+    const updates = { ...args };
+    delete updates.id;
+
+    const usersThatAreTagged = args.taggedUser.map(user => {
+      return { id: user };
+    });
+
+    const presentation = await ctx.db.mutation.updatePresentation(
+      {
+        data: {
+          ...updates,
+          createdBy: {
+            connect: {
+              id: args.createdBy
+            }
+          },
+          taggedUser: {
+            connect: usersThatAreTagged
+          },
+          tags: {
+            set: args.tags
+          },
+          ddx: {
+            set: args.ddx
+          }
+        },
+        where: {
+          id: args.id
+        }
+      },
+      info
+    );
+
+    return presentation;
+  },
+
+  deletePresentation(parent, args, ctx, info) {
+    const where = { id: args.id };
+
+    return ctx.db.mutation.deletePresentation({ where }, info);
+  },
+
   async batchLoadPresentation(parent, args, ctx, info) {
+    console.log(args);
+
     const presentation = await ctx.db.mutation.createPresentation(
       {
         data: {
@@ -213,6 +263,36 @@ const mutations = {
           },
           ddx: {
             set: args.ddx
+          }
+        }
+      },
+      info
+    );
+
+    return presentation;
+  },
+
+  async batchLoadLearning(parent, args, ctx, info) {
+    const taggedUserNew = args.taggedUser.map(taggedUser => {
+      return { id: taggedUser };
+    });
+
+    // console.log(taggedUserNew);
+
+    const presentation = await ctx.db.mutation.createPresentation(
+      {
+        data: {
+          ...args,
+          createdBy: {
+            connect: {
+              username: args.createdBy
+            }
+          },
+          tags: {
+            set: args.tags
+          },
+          taggedUser: {
+            connect: taggedUserNew
           }
         }
       },
@@ -271,6 +351,20 @@ const mutations = {
       });
       return updatedPresentation;
     }
+  },
+
+  async deleteAllPresentations(parent, args, ctx, info) {
+    const presentationIds = await ctx.db.query.presentations({}, info);
+    const idArray = presentationIds.map(presentation => {
+      return presentation.id;
+    });
+    console.log(idArray);
+
+    await ctx.db.mutation.deleteManyPresentations({
+      where: {
+        id_in: idArray
+      }
+    });
   }
 };
 
