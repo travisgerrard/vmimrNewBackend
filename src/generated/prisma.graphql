@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/travis-gerrard-c527f1/VMIMR/dev
-# timestamp: Fri Jan 11 2019 17:44:44 GMT-0800 (Pacific Standard Time)
+# timestamp: Wed Jan 16 2019 14:51:21 GMT-0800 (Pacific Standard Time)
 
 type AggregatePresentation {
   count: Int!
@@ -83,9 +83,9 @@ enum Permission {
 type Presentation implements Node {
   id: ID!
   presentationType: PresentationTypes!
-  hpi: String
-  physicalExam: String
-  summAssessment: String
+  hpi: String!
+  physicalExam: String!
+  summAssessment: String!
   ddx: [String!]!
   tags: [RotationTags!]!
   createdBy: User!
@@ -240,9 +240,9 @@ enum PresentationOrderByInput {
 type PresentationPreviousValues {
   id: ID!
   presentationType: PresentationTypes!
-  hpi: String
-  physicalExam: String
-  summAssessment: String
+  hpi: String!
+  physicalExam: String!
+  summAssessment: String!
   ddx: [String!]!
   tags: [RotationTags!]!
   whatWasLearned: String!

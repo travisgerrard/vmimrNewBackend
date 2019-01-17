@@ -88,6 +88,8 @@ const mutations = {
       )
     });
 
+    console.log(mailRes);
+
     // 4. Return the message
     return { message: 'Thanks' };
   },
@@ -153,8 +155,7 @@ const mutations = {
           tags: {
             set: args.tags
           },
-          presentationType: 'Pearl',
-          myCreatedAt: new Date()
+          presentationType: 'Pearl'
         }
       },
       info
@@ -293,7 +294,11 @@ const mutations = {
           },
           taggedUser: {
             connect: taggedUserNew
-          }
+          },
+          hpi: '',
+          physicalExam: '',
+          summAssessment: '',
+          ddx: []
         }
       },
       info
@@ -303,22 +308,25 @@ const mutations = {
   },
 
   async likePresentation(parent, args, ctx, info) {
-    // console.log(args);
+    console.log(args);
+    // console.log(info);
 
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that');
     }
 
-    const presentation = await ctx.db.query.presentation({
-      where: {
-        id: args.id
-      }
-    });
+    // const presentation = await ctx.db.query.presentation({
+    //   where: {
+    //     id: args.id
+    //   }
+    // });
 
-    // console.log(presentation);
+    // const likesObjectArray = args.likes.map(like => {
+    //   return { id: like };
+    // });
 
-    if (!presentation.likes) {
-      const updatedPresentation = await ctx.db.mutation.updatePresentation({
+    if (args.addLike) {
+      return (updatedPresentation = await ctx.db.mutation.updatePresentation({
         where: { id: args.id },
         data: {
           likes: {
@@ -326,31 +334,42 @@ const mutations = {
           }
         },
         info
-      });
-
-      return updatedPresentation;
+      }));
     }
-
-    if (presentation.likes.contains(args.likes)) {
-      const updatedPresentation = await ctx.db.mutation.updatePresentation({
-        where: { id: args.id },
-        data: {
-          likes: presentation.likes.filter(function(likes) {
-            return likes !== args.likes;
-          })
-        },
-        info
-      });
-      return updatedPresentation;
-    } else {
-      const updatedPresentation = await ctx.db.mutation.updatePresentation({
-        where: { id: args.id },
-        data: {
-          likes: [...presentation.likes, args.likes]
+    return (updatedPresentation = await ctx.db.mutation.updatePresentation({
+      where: { id: args.id },
+      data: {
+        likes: {
+          disconnect: [{ id: ctx.request.userId }]
         }
-      });
-      return updatedPresentation;
-    }
+      },
+      info
+    }));
+
+    // if (presentation.likes.contains(args.likes)) {
+    //   const updatedPresentation = await ctx.db.mutation.updatePresentation({
+    //     where: { id: args.id },
+    //     data: {
+    //       likes: { disconnect: [{ id: ctx.request.userId }] }
+    //     },
+    //     info
+    //   });
+    //   console.log('343');
+    //   console.log(updatedPresentation);
+
+    //   return updatedPresentation;
+    // } else {
+    //   const updatedPresentation = await ctx.db.mutation.updatePresentation({
+    //     where: { id: args.id },
+    //     data: {
+    //       likes: { connect: [{ id: ctx.request.userId }] }
+    //     }
+    //   });
+    //   console.log('355');
+    //   console.log(updatedPresentation);
+
+    //   return updatedPresentation;
+    // }
   },
 
   async deleteAllPresentations(parent, args, ctx, info) {

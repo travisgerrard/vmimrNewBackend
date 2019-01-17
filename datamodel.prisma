@@ -58,10 +58,10 @@ enum RotationTags {
 type Presentation {
   id: ID! @unique
   presentationType: PresentationTypes! @default(value: "General")
-  hpi: String
-  physicalExam: String
-  summAssessment: String
-  ddx: [String]
+  hpi: String! @default(value: "")
+  physicalExam: String! @default(value: "")
+  summAssessment: String! @default(value: "")
+  ddx: [String]! @default(value: [])
   tags: [RotationTags]!
   createdBy: User! @relation(name: "PresentationCreator")
   whatWasLearned: String!
@@ -82,12 +82,12 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission]
-  presentations: [Presentation]
+  presentations: [Presentation]!
     @relation(name: "PresentationCreator", onDelete: CASCADE)
   questions: [Question]
-  taggedPresentation: [Presentation]
+  taggedPresentation: [Presentation]!
     @relation(name: "TaggedPresentation", onDelete: CASCADE)
-  likedPresentations: [Presentation]
+  likedPresentations: [Presentation]!
     @relation(name: "LikedPresentation", onDelete: CASCADE)
   visible: Boolean! @default(value: "true")
   institution: String

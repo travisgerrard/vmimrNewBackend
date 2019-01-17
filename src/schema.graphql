@@ -23,6 +23,7 @@ type Mutation {
     whatWasLearned: String!
     tags: [RotationTags]!
     taggedUser: [ID]!
+    myCreatedAt: DateTime!
   ): Presentation!
   createPresentation(
     presentationType: PresentationTypes!
@@ -33,7 +34,7 @@ type Mutation {
     tags: [RotationTags]!
     whatWasLearned: String!
     taggedUser: [ID]!
-    myCreaatedAt: DateTime!
+    myCreatedAt: DateTime!
   ): Presentation!
   updatePresentation(
     id: ID!
@@ -48,7 +49,7 @@ type Mutation {
     createdBy: ID!
     myCreatedAt: DateTime!
   ): Presentation!
-  likePresentation(id: ID!): Presentation
+  likePresentation(id: ID!, addLike: Boolean!): Presentation
   deletePresentation(id: ID!): Presentation
   batchLoadPresentation(
     presentationType: PresentationTypes!
