@@ -1,5 +1,5 @@
-endpoint: ${env:PRISMA_ENDPOINT}
-# endpoint: https://vmimr-e3be6a95f1.herokuapp.com/vmimr-prod/prod
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://vmimr-e3be6a95f1.herokuapp.com/vmimr-prod/prod
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_SECRET}
 hooks:
